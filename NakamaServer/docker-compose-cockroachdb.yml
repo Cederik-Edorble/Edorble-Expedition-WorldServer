@@ -1,0 +1,24 @@
+version: '3'
+services:
+  nakama:
+    container_name: nakama
+    image: heroiclabs/nakama:latest
+    entrypoint:
+      - "/bin/sh"
+      - "-ecx"
+      - > 
+          /nakama/nakama migrate up --database.address "cederik_edorble:-qOJ5jdhUwC4PVw5@free-tier5.gcp-europe-west1.cockroachlabs.cloud:26257/edorble-dev-europe-543.defaultdb" &&    
+          exec /nakama/nakama --name nakama1 --database.address "cederik_edorble:-qOJ5jdhUwC4PVw5@free-tier5.gcp-europe-west1.cockroachlabs.cloud:26257/edorble-dev-europe-543.defaultdb"
+    restart: always
+    volumes:
+      - ./:/nakama/data
+    expose:
+      - "7349"
+      - "7350"
+      - "7351"
+    ports:
+      - "7349:7349"
+      - "7350:7350"
+      - "7351:7351"
+volumes:
+  nakama:

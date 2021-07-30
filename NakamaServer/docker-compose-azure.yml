@@ -1,0 +1,14 @@
+version: '3'
+services:
+  cockroachdb:
+        container_name: cockroachdb
+        image: cockroachdb/cockroach:latest-v20.2
+        command: start-single-node --insecure 
+        restart: "no"
+        expose:
+          - "8080"
+          - "26257"
+        ports:
+          - "26257:26257"
+          - "8080:8080"
+
