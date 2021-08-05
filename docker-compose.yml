@@ -1,0 +1,26 @@
+version: '3'
+services:
+  nakama:
+    container_name: nakama
+    image: heroiclabs/nakama:latest
+    entrypoint: 
+    - "/bin/sh" 
+    - "-ecx" 
+    - > 
+        /nakama/nakama migrate up --database.address $${COCKROACHDB_CONNECTION_STRING} && 
+        exec /nakama/nakama --name nakama1 --database.address $${COCKROACHDB_CONNECTION_STRING}
+    restart: always
+    volumes:
+      - ./:/nakama/data
+    environment:
+      - COCKROACHDB_CONNECTION_STRING=cederik:yguL2tRnkZ5IXOWO@free-tier.gcp-us-central1.cockroachlabs.cloud:26257/first-bird-2784.defaultdb
+    expose:
+      - "7349"
+      - "7350"
+      - "7351"
+    ports:
+      - "7349:7349"
+      - "7350:7350"
+      - "7351:7351"
+volumes:
+  nakama:
