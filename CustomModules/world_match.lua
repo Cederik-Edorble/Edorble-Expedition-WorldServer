@@ -43,16 +43,29 @@ end
 
 function world_match.match_join_attempt(context, dispatcher, tick, state, presence, metadata)
   if state.presences[presence.user_id] ~= nil then
+  	print(presence.user_id, ' ', presence.username , ' user already connected')
 	return state, false, "User already connected."
-  end
-  return state, true
+  else 
+    print(presence.user_id, ' ', presence.username , ' user new connection')
+		state.presences[presence.user_id] = presence.user_id
+	end
+  	return state, true
 end
 
 function world_match.match_join(context, dispatcher, tick, state, presences)
-  return state
+	print("match_join ", presences )
+  for _ in pairs(presences) do print('z') end
+	return state
 end
 
 function world_match.match_leave(context, dispatcher, tick, state, presences)
+  print("match_leave ",presences==nil )
+  for _ in pairs(presences) do print('x') end
+ 
+  for key,value in pairs(presences) do 
+    --print(presences[key].user_id)
+    state.presences[presences[key].user_id] = nil 
+  end
   return state
 end
 
@@ -132,6 +145,7 @@ function world_match.match_loop(context, dispatcher, tick, state, messages)
 end
 
 function world_match.match_terminate(context, dispatcher, tick, state, grace_seconds)
+  print('match_terminate')
   screens = nil
   return state
 end
