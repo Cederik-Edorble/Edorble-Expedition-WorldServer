@@ -12,7 +12,8 @@ local NakamaCodes = {
     syncScreenLinkSet = 8,
     fly = 9,
     broadcastVoice = 10,
-    teleport = 11
+    teleport = 11,
+    marker = 12
 }
 
 local VideoState = {
@@ -133,6 +134,12 @@ function world_match.match_loop(context, dispatcher, tick, state, messages)
 
         local presences = nil
         dispatcher.broadcast_message(NakamaCodes.teleport, message.data, presences, message.sender)
+    end
+
+    if code == NakamaCodes.marker then
+
+        local presences = nil
+        dispatcher.broadcast_message(NakamaCodes.marker, message.data, presences, message.sender)
     end
   end
   return state
