@@ -15,7 +15,8 @@ local NakamaCodes = {
     teleport = 11,
     marker = 12,
     summonAsk = 13,
-    summonReject = 14
+    summonReject = 14,
+    startscriptableevent = 15
 }
 
 local VideoState = {
@@ -156,6 +157,12 @@ function world_match.match_loop(context, dispatcher, tick, state, messages)
         dispatcher.broadcast_message(NakamaCodes.summonReject, message.data, presences, message.sender)
     end
     
+    if code == NakamaCodes.startscriptableevent then
+
+        local presences = nil
+        dispatcher.broadcast_message(NakamaCodes.startscriptableevent, message.data, presences, message.sender)
+    end
+
   end
   return state
 end
